@@ -9,40 +9,42 @@ services:
     ports:
      - 5435:5432
     restart: always
+    volumes:
+      - ./data:/data
     environment:
       - POSTGRES_DB=neotoma
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=testpwd
       - POSTGRES_HOST_AUTH_METHOD=trust
-  core_api:
-    build:
-      context: ./api_nodetest
-      dockerfile: api.Dockerfile
-    tty: true
-    init: true
-    ports:
-        - 3101:3001
-    depends_on:
-      - db
-    environment:
-      - RDS_HOSTNAME=ndbdb
-      - RDS_PORT=5432
-      - RDS_DATABASE=neotoma
-      - RDS_USERNAME=postgres
-      - RDS_PASSWORD=testpwd
-  tilia_api:
-    build:
-      context: ./tilia_api
-      dockerfile: tilia.Dockerfile
-    tty: true
-    init: true
-    ports:
-        - 3106:3006
-    depends_on:
-      - db
-    environment:
-      - RDS_HOSTNAME=ndbdb
-      - RDS_PORT=5432
-      - RDS_DATABASE=neotoma
-      - RDS_USERNAME=postgres
-      - RDS_PASSWORD=testpwd
+  # core_api:
+  #   build:
+  #     context: ./api_nodetest
+  #     dockerfile: api.Dockerfile
+  #   tty: true
+  #   init: true
+  #   ports:
+  #       - 3101:3001
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - RDS_HOSTNAME=ndbdb
+  #     - RDS_PORT=5432
+  #     - RDS_DATABASE=neotoma
+  #     - RDS_USERNAME=postgres
+  #     - RDS_PASSWORD=testpwd
+  # tilia_api:
+  #   build:
+  #     context: ./tilia_api
+  #     dockerfile: tilia.Dockerfile
+  #   tty: true
+  #   init: true
+  #   ports:
+  #       - 3106:3006
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - RDS_HOSTNAME=ndbdb
+  #     - RDS_PORT=5432
+  #     - RDS_DATABASE=neotoma
+  #     - RDS_USERNAME=postgres
+  #     - RDS_PASSWORD=testpwd

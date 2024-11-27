@@ -7,8 +7,8 @@ RUN  apt update \
 
 COPY . .
 # Pull in the database:
-RUN mkdir -p /tmp/pg_data
+# RUN mkdir -p /tmp/pg_data
 RUN chmod +x /dbruns/populate.sh
 
-ENTRYPOINT ["bash", "/dbruns/populate.sh"]
+# ENTRYPOINT ["bash", "/dbruns/populate.sh"]
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
