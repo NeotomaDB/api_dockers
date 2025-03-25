@@ -1,3 +1,5 @@
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+
 # Neotoma Application Stack
 
 This Docker Compose application is designed to mimic the full Neotoma Stack, including a clean version of the Neotoma Database (all personal data has been anonymized). We combine a "clean" version of the Neotoma database, with both the Tilia and Neotoma APIs.
