@@ -1,4 +1,4 @@
-[![lifecycle](https://img.shields.io/badge/lifecycle-stable-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 # Neotoma Application Stack
 
