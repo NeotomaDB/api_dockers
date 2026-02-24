@@ -6,14 +6,16 @@ This Docker Compose application is designed to mimic the full Neotoma Stack, inc
 
 The stack downloads the "clean" tar file from our repository, and installs it into the container, and then pulls in both the apis from Github, building them with Node/yarn.  Once the container is deployed the following ports will be active:
 
-* 5435: Neotoma Postgres Database
-* 3001: Neotoma API
-* 3006: Tilia API
+* `5435`: Neotoma Postgres Database
+* `3001`: Neotoma API
+* `3006`: Tilia API
+
+The goal of this stack is to allow advanced users to develop tools for Neotoma on their local machines without impacting production services. It also allows users to modify the API or Tilia source code, and to pull from GitHub forks of these resources by modifying the `.env` file to point to different code sources, branches, or forks.
 
 ## Contributors
 
 * [Simon Goring](http://goring.org): University of Wisconsin - Madison [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605)
-* Socorro Dominguez
+* Socorro Dominguez: University of Wisconsin - Madison [![orcid](https://img.shields.io/badge/orcid-0000--0002--7926--4935-brightgreen.svg)](https://orcid.org/0000-0002-7926-4935)
 
 ## Contribution
 
@@ -27,4 +29,26 @@ To use this repository, first clone the repository to your local computer:
 git clone 
 ```
 
-Once the 
+Once the repository is cloned you can simply execute:
+
+```bash
+docker compose up
+```
+
+This will then make the main Neotoma API available through port `3001`, the Tilia API available through port `3006`, and the Neotoma database available at port `5435`. Given this, `localhost:3001` should provide the same result as [`https://api.neotomadb.org`](https://api.neotomadb.org).
+
+### Docker Structure
+
+The main `docker-compose.yaml` defines the main components within the Docker container. It includes environments for each API and for the database itself. We isolate the difference components so that we can manage and manipulate them independently as we work on building the toolset.
+
+#### clean_database
+
+This folder contains the Dockerfile used to manage the downloading and extraction of the Neotoma database to the Docker container.
+
+#### api_nodetest
+
+This folder contains the Dockerfile to clone and initialize the Neotoma API.
+
+#### tilia_api
+
+This folder contains the Dockerfile to clone and initialize the Tilia API.
