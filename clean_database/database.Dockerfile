@@ -6,7 +6,6 @@ RUN  apt update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY . .
-RUN mkdir -p /tmp/pg_data
 ADD https://neotoma-remote-store.s3.us-east-2.amazonaws.com/clean_dump.tar.gz /tmp/pg_data/
 
 # Pull in the database:

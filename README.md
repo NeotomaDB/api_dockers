@@ -12,6 +12,35 @@ The stack downloads the "clean" tar file from our repository, and installs it in
 
 The goal of this stack is to allow advanced users to develop tools for Neotoma on their local machines without impacting production services. It also allows users to modify the API or Tilia source code, and to pull from GitHub forks of these resources by modifying the `.env` file to point to different code sources, branches, or forks.
 
+```mermaid
+flowchart TD
+    subgraph docker["Docker Network"]
+        subgraph postgres["Postgres Container :5432"]
+            db[(Neotoma DB)]
+        end
+        subgraph restore["DB Restore Container"]
+            script[restore.sh]
+        end
+        subgraph api1["Neotoma API Container :3001"]
+            node1[Node/Express]
+        end
+        subgraph api2["Tilia API Container :3006"]
+            node2[Node/Express]
+        end
+    end
+
+    s3[(S3 Bucket)] -->|downloads dump| restore
+    gh[GitHub] -->|git clone| api1
+    gh -->|git clone| api2
+    restore -->|restores| postgres
+    api1 -->|queries| postgres
+    api2 -->|queries| postgres
+
+    user[User] -->|localhost:5435| postgres
+    user -->|localhost:3001| api1
+    user -->|localhost:3006| api2
+```
+
 ## Contributors
 
 * [Simon Goring](http://goring.org): University of Wisconsin - Madison [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605)
@@ -43,7 +72,25 @@ The main `docker-compose.yaml` defines the main components within the Docker con
 
 #### clean_database
 
-This folder contains the Dockerfile used to manage the downloading and extraction of the Neotoma database to the Docker container.
+This folder contains the Dockerfile used to manage the downloading and extraction of the Neotoma database to the Docker container. The dockerfile and the `db_restore.sh` script should act as a model for users who wish to simply run the Neotoma database within a Docker container. Because the database is relatively large, and restoring the database takes some time, there are elements within the script to check for prior downloads, and to check for successful restoration.
+
+You can use this repository/docker compose file to restore only the database using the command:
+
+```bash
+docker compose up postgres db-restore
+```
+
+If you have successfully restore the database within the container before you may see the statement:
+
+```bash
+db-restore-1  | [restore] Database already restored. Skipping.
+db-restore-1 exited with code 0
+```
+
+This is simply a statement that the database has been properly restored, and not an error message.
+
+Once the database is restored and the container is available, you can access it with your database program at post `5435`
+
 
 #### api_nodetest
 
