@@ -84,7 +84,7 @@ services:
       RDS_DATABASE: ${RDS_DATABASE:-neotoma}
       RDS_USERNAME: ${POSTGRES_USER:-appuser}
       RDS_PASSWORD: ${POSTGRES_PASSWORD:-apppassword}
-      PGSSLMODE: disable
+      SSLCERT: false
     ports:
       - "3002:3002"
     restart: unless-stopped

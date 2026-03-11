@@ -1,14 +1,14 @@
 FROM node:alpine
 
 RUN apk fix && \
-    apk --no-cache --update add git git-lfs gpg less openssh patch perl wget && \
+    apk --no-cache --update add git git-lfs gpg less openssh patch perl curl && \
     git lfs install
 RUN mkdir /usr/src
-RUN cd /tmp && \
-    wget 'http://github.com/NeotomaDB/tilia_api/archive/refs/tags/v1.0.0.tar.gz' -P /tmp
-RUN tar -xvf /tmp/v1.0.0.tar.gz -C /usr/src/
-RUN ls /usr/src
-WORKDIR /usr/src/tilia_api-1.0.0
+RUN mkdir -p /usr/src/app && \
+    curl -fSL "https://github.com/NeotomaDB/tilia_api/tarball/latest" -o /tmp/api.tar.gz && \
+    tar -xzf /tmp/api.tar.gz -C /usr/src/app --strip-components=1 && \
+    rm /tmp/api.tar.gz
+WORKDIR /usr/src/app
 RUN npm install
 
 EXPOSE 3002
