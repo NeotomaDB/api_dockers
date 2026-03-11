@@ -5,7 +5,7 @@ RUN apk fix && \
     git lfs install
 RUN mkdir /usr/src
 RUN mkdir -p /usr/src/app && \
-    curl -fSL "https://github.com/NeotomaDB/tilia_api/tarball/latest" -o /tmp/api.tar.gz && \
+    curl -fSL "https://github.com/NeotomaDB/tilia_api/archive/refs/tags/v1.1.0.tar.gz" -o /tmp/api.tar.gz && \
     tar -xzf /tmp/api.tar.gz -C /usr/src/app --strip-components=1 && \
     rm /tmp/api.tar.gz
 WORKDIR /usr/src/app

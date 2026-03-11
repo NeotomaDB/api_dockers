@@ -55,7 +55,7 @@ We welcome user contributions to this project.  All contributors are expected to
 To use this repository, first clone the repository to your local computer:
 
 ```bash
-git clone 
+git clone https://github.com/NeotomaDB/api_dockers.git
 ```
 
 Once the repository is cloned you can simply execute:
